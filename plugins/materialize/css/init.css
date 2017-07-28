@@ -1,0 +1,61 @@
+
+body{
+	background: #efebe9;
+}
+
+
+table{
+
+	border-radius: 5px !important;
+	background: #fff !important;
+	padding: 30px !important;
+}
+
+.btn, .btn-large {
+    text-decoration: none;
+    color: #fff;
+    background-color: #bf360c  !important;
+    border-radius: 5px  !important;
+   }
+
+   #app{
+    border-radius: 10px;
+    padding: 10px;
+    -webkit-box-shadow: 10px 10px 5px -4px rgba(224,224,224,1);
+-moz-box-shadow: 10px 10px 5px -4px rgba(224,224,224,1);
+box-shadow: 10px 10px 5px -4px rgba(224,224,224,1);
+   }
+
+.modal{
+	border-radius: 5px; 
+}
+
+   #modal1{
+   	min-height:400px
+   }
+
+  #modal2 {
+   	min-height:500px
+   }
+
+     #modal3{
+   	min-height:250px;
+   }
+
+.modal-content h4{
+	    background: #666;
+    padding: 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1.6em;
+}
+
+
+.help-block{
+    height: 60px;
+    padding: 10px;
+    background: yellow;
+    border-radius: 5px;
+    margin-left: 25%;
+  
+}

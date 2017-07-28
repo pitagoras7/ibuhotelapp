@@ -1,0 +1,567 @@
+{% extends "template/crud.html" %}
+
+
+{% block body %}
+
+<div id="crudNav">
+
+	<div class="row">
+
+		<div class="col m1 s12">
+			<a onclick="newLocation()" class=" btn btn-small waves-effect waves-light green"><i class="material-icons">add</i> 
+			</a>
+		</div>
+
+		<div class="col m3 s12">
+
+			<a onclick="filter_datatable()" class="btn  btn-small waves-effect waves-light green"> Filter </a>
+
+		</div>
+
+	</div>
+</div>
+
+
+
+<div id="tableLocation">
+</div>
+
+
+
+<div id="modalCreateLocation" class="modal ">
+	<form id="formCreateLocation"  method="POST"  accept-charset="UTF-8">
+		<input name="_method" type="hidden" value="PUT">
+		<div class="modal-content">
+			<h4> New Location </h4>
+			<div class="row">
+				<div id="inputs"></div>
+
+				<!-- Modal  -->
+
+
+				<div class="input-field col m6 s12">
+					<select name="location_type" id="location_type">
+						
+					</select>
+				</div>
+
+
+				<div class="input-field col m6 s12">
+					<select name="location_subtype" id="location_subtype">
+						
+					</select>
+				</div>
+
+
+				<div class="input-field col m6 s12">
+					<input  placeholder="" name="name" id="name" type="text" >
+					<label>name</label>
+				</div>
+
+				<div class="input-field col m6 s12">
+					<input  placeholder="" name="longname" id="longname" type="text" >
+					<label>longname</label>
+				</div>
+
+				<div class="input-field col m6 s12">
+					<input  placeholder="" name="details" id="details" type="text" >
+					<label>details</label>
+				</div>
+
+				<div class="input-field col m6 s12">
+					<input  placeholder="" name="telephone" id="telephone" type="text" >
+					<label>telephone</label>
+				</div>
+
+				<div class="input-field col m6 s12">
+					<input  placeholder="" name="estatu" id="estatu" type="text" >
+					<label>estatu</label>
+				</div>
+
+				<div class="input-field col m6 s12">
+					<input  placeholder="" name="image" id="image" type="text" >
+					<label>image</label>
+				</div>
+
+
+
+				<!-- end Modal  -->
+
+				<div class="input-field col m12 s12" style="text-align: right;">
+					
+					<button onclick="newLocationConfirm()"   class="btn-large waves-effect waves-light green darken-4" type="button" name="action"> Registrar  
+						<i class="material-icons right">send</i>
+					</button>
+
+				</div>	
+
+
+			</div>
+		</div>
+
+	</form>
+</div>
+
+
+<div id="modalUpdateLocation" class="modal ">
+	<form id="formUpdateLocation"  method="POST"  accept-charset="UTF-8">
+		<input name="_method" type="hidden" value="PUT">
+		<div class="modal-content">
+			<h4> Edit Location </h4>
+			<div class="row">
+				<div id="inputs"></div>
+
+				<!-- Modal  -->
+
+
+				<div class="input-field col m6 s12">
+					<select name="location_type" id="location_type">
+						
+					</select>
+				</div>
+
+				<div class="input-field col m6 s12">
+					<input  placeholder="" name="location_subtype" id="location_subtype" type="text" >
+					<label>location_subtype</label>
+				</div>
+
+				<div class="input-field col m6 s12">
+					<input  placeholder="" name="name" id="name" type="text" >
+					<label>name</label>
+				</div>
+
+				<div class="input-field col m6 s12">
+					<input  placeholder="" name="longname" id="longname" type="text" >
+					<label>longname</label>
+				</div>
+
+				<div class="input-field col m6 s12">
+					<input  placeholder="" name="details" id="details" type="text" >
+					<label>details</label>
+				</div>
+
+				<div class="input-field col m6 s12">
+					<input  placeholder="" name="telephone" id="telephone" type="text" >
+					<label>telephone</label>
+				</div>
+
+				<div class="input-field col m6 s12">
+					<input  placeholder="" name="estatu" id="estatu" type="text" >
+					<label>estatu</label>
+				</div>
+
+				<div class="input-field col m6 s12">
+					<input  placeholder="" name="image" id="image" type="text" >
+					<label>image</label>
+				</div>
+
+
+
+
+
+
+				<!-- end Modal  -->
+				<div class="input-field col m12 s12" style="text-align: right">
+					<button onclick="updateLocationConfirm()"   class="btn-large waves-effect waves-light green darken-4" type="button" name="action"> Update 
+						<i class="material-icons right">send</i>
+					</button>
+				</div>	
+
+
+			</div>
+		</div>
+
+	</form>
+</div>
+
+
+
+<div id="modalDeleteLocation" class="modal ">
+	<form id="formDeleteLocation"  method="POST"  accept-charset="UTF-8">
+		<input name="_method" type="hidden" value="DELETE">
+		<div class="modal-content">
+			
+			<div class="row">
+				<div id="inputs"></div>
+				<h3> Desea eliminar el elemento ?</h3>
+
+				<div class="input-field col m12 s12" style="text-align: right">
+					<button onclick="deleteLocationConfirm()"   class="btn-large waves-effect waves-light green darken-4" type="button" name="action"> Confirmar  
+						<i class="material-icons right">send</i>
+					</button>
+				</div>	
+
+			</div>
+
+
+
+		</div>
+
+	</form>
+</div>
+
+
+
+{% endblock %}
+
+
+
+{% block notification %}
+{% include 'template/notification.html' %}
+{% endblock %}
+
+
+{% block chat_sidebar %} 
+{% include 'template/chat_sidebar.html' %}
+{% endblock %}
+
+
+{% block menu_lateral %} 
+{% include 'template/menu_lateral.html' %}
+{% endblock %}
+
+
+{% block javascript %} 
+<script>
+
+	function create_menu(){
+
+		$.ajax({
+			method: "GET",
+			url: "http://localhost/API/menu_lateral.php/1",
+			dataType: "json"
+		})
+		.done(function(result) {
+			var menu= "";
+			$.each(result, function(i, n) {
+				menu = menu+"<li class=\"no-padding\"><a class=\"waves-effect waves-grey\" href=\""+n.href+"\">"+n.name+"</a></li>";
+			});
+			$('#menu').append(menu);
+		});
+
+	}
+
+
+	function create_notification(){
+
+
+		$("#notification__ .noti").remove();
+
+
+		$.ajax({
+			method: "GET",
+			url: "http://localhost/API/notifications.php/1",
+			dataType: "json"
+		})
+		.done(function(result) {
+			var menu= "";
+			$.each(result, function(i, n) {
+				menu = menu+" <li class='noti'><a href=\""+n.href+"\"><div class=\"notification\"><div class=\"notification-icon circle "+n.color+"\"> <i class=\"material-icons\">"+n.icon+"</i></div><div class=\"notification-text\"><p><b>"+n.emisor+"</b><br> "+n.name+"</p><span>"+n.created_at+"</span></div></div></a></li>";
+			});
+
+			$('#notification__').append(menu);
+
+		});
+
+	}
+
+
+	us = jQuery.parseJSON(sessionStorage.getItem("user"));
+	$('#name__').text(us.firstname+' '+us.lastname);
+	$('#email__').text(us.email);
+	$('#avatar__').attr("src",us.avatar);
+	create_menu();
+	create_notification();
+
+
+
+
+
+
+	/* Special code */
+
+
+	sessionStorage.setItem("urlAjax","http://localhost/API/Locations.php/1");
+
+
+	create_datatableLocation();
+
+
+	function filter_datatable(){
+		sessionStorage.setItem("urlAjax","http://localhost/API/Locations.php/1/color");
+		create_datatableLocation();
+	}
+
+
+
+
+	function create_datatableLocation(){
+
+		$('#tableLocation table').remove();
+		$('#tableLocation #datatableLocations___filter').remove();
+		$('#tableLocation #datatableLocations___info').remove();
+
+
+		$("#tableLocation").append("<table id='datatableLocations__' class='display responsive-table datatable-example'><thead><tr><th class=' displayField_id  displayFieldid'><span class='DataTableHeader_id ' >id</span></th><th class=' displayField_location_type  displayFieldlocation_type'><span class='DataTableHeader_location_type ' >location_type</span></th><th class=' displayField_location_subtype  displayFieldlocation_subtype'><span class='DataTableHeader_location_subtype ' >location_subtype</span></th><th class=' displayField_name  displayFieldname'><span class='DataTableHeader_name ' >name</span></th><th class=' displayField_longname  displayFieldlongname'><span class='DataTableHeader_longname ' >longname</span></th><th class=' displayField_details  displayFielddetails'><span class='DataTableHeader_details ' >details</span></th><th class=' displayField_telephone  displayFieldtelephone'><span class='DataTableHeader_telephone ' >telephone</span></th><th class=' displayField_address  displayFieldaddress'><span class='DataTableHeader_address ' >address</span></th><th class=' displayField_estatu  displayFieldestatu'><span class='DataTableHeader_estatu ' >estatu</span></th><th class=' displayField_image  displayFieldimage'><span class='DataTableHeader_image ' >image</span></th><th class=' displayField_created  displayFieldcreated'><span class='DataTableHeader_created ' >created</span></th><th class=' displayField_archived  displayFieldarchived'><span class='DataTableHeader_archived ' >archived</span></th><th class=' displayField_archived_at  displayFieldarchived_at'><span class='DataTableHeader_archived_at ' >archived_at</span></th><th></th></tr></thead><tbody class='tbodydata' ></tbody></table>");
+
+
+		$.ajax({
+			method: "GET",
+			url: sessionStorage.getItem("urlAjax"),
+			dataType: "json"
+		})
+		.done(function(result) {
+
+			$('#datatableLocations__ td').remove();
+
+			var row= "";
+			$.each(result, function(i, n) {
+				row = row+"<tr><td class='DataTableField_id displayField_id'> "+ n.id +"</td><td class='DataTableField_location_type displayField_location_type'>"+ n.location_type_fk.name +"</td><td class='DataTableField_location_subtype displayField_location_subtype'> "+ n.location_subtype +"</td><td class='DataTableField_name displayField_name'> "+ n.name +"</td><td class='DataTableField_longname displayField_longname'> "+ n.longname +"</td><td class='DataTableField_details displayField_details'> "+ n.details +"</td><td class='DataTableField_telephone displayField_telephone'> "+ n.telephone +"</td><td class='DataTableField_address displayField_address'> "+ n.address +"</td><td class='DataTableField_estatu displayField_estatu'> "+ n.estatu +"</td><td class='DataTableField_image displayField_image'> "+ n.image +"</td><td class='DataTableField_created displayField_created'> "+ n.created +"</td><td class='DataTableField_archived displayField_archived'> "+ n.archived +"</td><td class='DataTableField_archived_at displayField_archived_at'> "+ n.archived_at +"</td><td style='width:100px'><a onclick=\"updateLocation("+n.id+")\" class=\"btn-floating btn-small waves-effect waves-light blue\"><i class=\"material-icons\">add</i></a>&nbsp;&nbsp;<a onclick=\"deleteLocation("+n.id+")\" class=\"btn-floating btn-small waves-effect waves-light red\"><i class=\"material-icons\">add</i></a>&nbsp;&nbsp;<a onclick=\"deleteLocation("+n.id+")\" class=\"btn-floating btn-small waves-effect waves-light orange\"><i class=\"material-icons\">add</i></a></td></tr>";
+			});
+
+			$('#datatableLocations__ tbody').append(row);
+
+			datatableLocation_load();
+
+			/* visibilidad de los campos en el DAtatable */
+
+			$(' #datatableLocations__ .displayField_location_type').css('display','table-cell');
+			$(' #datatableLocations__ .displayField_location_subtype').css('display','table-cell');
+			$(' #datatableLocations__ .displayField_name').css('display','table-cell');
+			$(' #datatableLocations__ .displayField_estatu').css('display','table-cell');
+			$(' #datatableLocations__ .displayField_id').css('display','none');
+			$(' #datatableLocations__ .displayField_longname').css('display','none');
+			$(' #datatableLocations__ .displayField_details').css('display','none');
+			$(' #datatableLocations__ .displayField_telephone').css('display','none');
+			$(' #datatableLocations__ .displayField_address').css('display','none');
+			$(' #datatableLocations__ .displayField_image').css('display','none');
+			$(' #datatableLocations__ .displayField_created').css('display','none');
+			$(' #datatableLocations__ .displayField_archived').css('display','none');
+			$(' #datatableLocations__ .displayField_archived_at').css('display','none');
+
+
+			$(".DataTableHeader_id ").text('id');
+			$(".DataTableHeader_location_type ").text('Tipo');
+			$(".DataTableHeader_location_subtype ").text('Categoria');
+			$(".DataTableHeader_name ").text('Nombre');
+			$(".DataTableHeader_longname ").text('longname');
+			$(".DataTableHeader_details ").text('details');
+			$(".DataTableHeader_telephone ").text('telephone');
+			$(".DataTableHeader_address ").text('address');
+			$(".DataTableHeader_estatu ").text('Estado');
+			$(".DataTableHeader_image ").text('image');
+			$(".DataTableHeader_created ").text('created');
+			$(".DataTableHeader_archived ").text('archived');
+			$(".DataTableHeader_archived_at ").text('archived_at');
+
+
+
+
+		});
+	}
+
+
+	function  datatableLocation_load(){
+
+
+		datatablex = $('#datatableLocations__').DataTable({
+			paging: false,
+			language: {
+				searchPlaceholder: 'Search records',
+				sSearch: '',
+				sLengthMenu: 'Show _MENU_',
+				sLength: 'dataTables_length',
+				oPaginate: {
+					sFirst: '<i class="material-icons">chevron_left</i>',
+					sPrevious: '<i class="material-icons">chevron_left</i>',
+					sNext: '<i class="material-icons">chevron_right</i>',
+					sLast: '<i class="material-icons">chevron_right</i>' 
+				}
+			}
+		});
+
+		$('.dataTables_length select').addClass('browser-default');
+	}
+
+
+	function deleteLocation(id){
+		$.ajax({
+			method: "GET",
+			url: "http://localhost/API/Locations.php/1/"+id,
+			dataType: "json"
+		})
+		.done(function(result) {
+			var row= "";
+			$.each(result, function(i, n) {
+				$('#formDeleteLocation #inputs input').remove();
+				$("#formDeleteLocation #inputs").append("<input name='id'  value='"+n.id+"'   type='hidden' >");
+				$('#modalDeleteLocation').modal('open');
+
+			});
+		});
+	}
+
+	function deleteLocationConfirm(){
+
+
+		$.ajax({
+			method: "DELETE",
+			url: "http://localhost/API/Locations.php/1/"+$("#formDeleteLocation #id").val(),
+			data: $("#formDeleteLocation").serialize()
+
+		})
+		.done(function(msg) {
+
+			$('#modalDeleteLocation').modal('close');
+			Materialize.toast(' Eliminación Completada', 4000);
+			create_datatableLocation();
+
+		});
+	}
+
+
+	function updateLocation(id){
+		$.ajax({
+			method: "GET",
+			url: "http://localhost/API/Locations.php/1/"+id,
+			dataType: "json"
+		})
+		.done(function(result) {
+			var row= "";
+
+			$.each(result, function(i, n) {
+
+	
+				$("#modalUpdateLocation #location_subtype ").val(n.location_subtype); 
+				$("#modalUpdateLocation #name ").val(n.name); 
+				$("#modalUpdateLocation #longname ").val(n.longname); 
+				$("#modalUpdateLocation #details ").val(n.details); 
+				$("#modalUpdateLocation #telephone ").val(n.telephone); 
+				$("#modalUpdateLocation #estatu ").val(n.estatu); 
+				$("#modalUpdateLocation #image ").val(n.image); 
+
+
+				$("#formUpdateLocation #inputs").append("<input name='id'  value='"+n.id+"'   type='hidden' >");
+				$('#modalUpdateLocation').modal('open');
+
+				SelectMasterLocation(n.location_type);
+
+
+			});
+		});
+	}
+
+	function updateLocationConfirm(){
+
+		$.ajax({
+			method: "PUT",
+			url: "http://localhost/API/Locations.php/1/"+$("#formUpdateLocation #id").val(),
+			data: $("#formUpdateLocation").serialize()
+		})
+		.done(function(msg) {
+			$('#modalUpdateLocation').modal('close');
+			Materialize.toast('Edition completed!', 4000);
+			create_datatableLocation();
+		});
+	}
+
+	function newLocation(id){
+
+
+		$('#modalCreateLocation').modal('open');
+		SelectMasterLocation();
+
+	}
+
+	function newLocationConfirm(){
+
+
+		$.ajax({
+			method: "POST",
+			url: "http://localhost/API/Locations.php/1/",
+			data: $("#formCreateLocation").serialize()
+		})
+		.done(function(msg) {
+			$('#modalCreateLocation').modal('close');
+			Materialize.toast('Nuevo Registro', 4000);
+			create_datatableLocation();
+		});
+
+	}
+
+
+	function SelectMasterLocation(id=0){
+
+
+		$.ajax({
+			method: "GET",
+			url: "http://localhost/API/masters.php/1/location",
+			dataType: "json"
+		})
+		.done(function(result) {
+
+			$("#formCreateLocation #location_type option").remove();
+
+			$.each(result, function(i, n) {
+
+
+				if(id== n.id){
+
+					$("#formCreateLocation #location_type").append("<option value=" + n.id + " selected >" + n.name + "</option>");
+
+				}else{
+
+					$("#formCreateLocation #location_type").append("<option value=" + n.id + ">" + n.name + "</option>");
+
+				}
+
+
+
+
+			});
+
+			$('#formCreateLocation #location_type').material_select();
+		});
+
+
+	}
+
+
+	$('#formCreateLocation #location_type').change( function(){
+
+		 SelectMasterLocationSubtype();
+
+	}); 
+
+	function SelectMasterLocationSubtype(){
+
+
+		$.ajax({
+			method: "GET",
+			url: "http://localhost/API/masters.php/1/locationSubtype/"+$("#formCreateLocation #location_type option:selected").text(),
+			dataType: "json"
+		})
+		.done(function(result) {
+
+			$("#formCreateLocation #location_subtype option").remove();
+
+			$.each(result, function(i, n) {
+
+
+		
+
+					$("#formCreateLocation #location_subtype").append("<option value=" + n.id + ">" + n.name + "</option>");
+
+				
+
+
+			});
+
+			$('#formCreateLocation #location_subtype').material_select();
+		});
+
+
+	}
+
+</script>
+{% endblock %}

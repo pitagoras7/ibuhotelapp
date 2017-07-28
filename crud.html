@@ -1,0 +1,416 @@
+{% extends "template/crud.html" %}
+
+
+{% block body %}
+
+<div id="crudNav">
+
+	<div class="row">
+
+		<div class="col m1 s12">
+			<a onclick="newMaster()" class=" btn btn-small waves-effect waves-light green"><i class="material-icons">add</i> 
+			</a>
+		</div>
+
+		<div class="col m3 s12">
+
+			<a onclick="filter_datatable()" class="btn  btn-small waves-effect waves-light green"> Filter </a>
+
+		</div>
+
+	</div>
+</div>
+
+
+
+<div id="tableMaster">
+</div>
+
+
+
+<div id="modalCreateMaster" class="modal ">
+	<form id="formCreateMaster"  method="POST"  accept-charset="UTF-8">
+		<input name="_method" type="hidden" value="PUT">
+		<div class="modal-content">
+			<h4> New Master </h4>
+			<div class="row">
+				<div id="inputs"></div>
+
+				<div class="input-field col m6 s12">
+					<input  placeholder="" name="longname" id="longname" type="text" >
+					<label>Long Name</label>
+				</div>
+
+				<div class="input-field col m6 s12">
+					<input placeholder="" name="name" id="name" type="text" class="validate">
+					<label for="name">Name</label>
+				</div>
+
+				<div class="input-field col m6 s12">
+					<select name="color" id="color">
+						<option value="yellow">yellow</option>
+						<option value="red">red</option>
+						<option value="blue">blue</option>
+					</select>
+					<label>Color</label>
+				</div>
+				
+				<div class="input-field col m6 s12">
+					<select name="type" id="type">
+						<option value="waiting">Waiting</option>
+						<option value="completed">Completed</option>
+					</select>
+					<label>Type</label>
+				</div>
+				
+
+
+				<div class="input-field col m6 s12">
+					<input  placeholder="" name="icon" id="icon" type="text" >
+					<label>Icon</label>
+				</div>	
+
+
+				<div class="input-field col m12 s12" style="text-align: right;">
+					
+					<button onclick="newMasterConfirm()"   class="btn-large waves-effect waves-light green darken-4" type="button" name="action"> Registrar  
+						<i class="material-icons right">send</i>
+					</button>
+
+				</div>	
+
+
+			</div>
+		</div>
+
+	</form>
+</div>
+
+
+<div id="modalUpdateMaster" class="modal ">
+	<form id="formUpdateMaster"  method="POST"  accept-charset="UTF-8">
+		<input name="_method" type="hidden" value="PUT">
+		<div class="modal-content">
+			<h4> Edit Master </h4>
+			<div class="row">
+				<div id="inputs"></div>
+
+				<div class="input-field col m12 s12">
+					<input  placeholder="" name="longname" id="longname" type="text" >
+					<label>Long Name</label>
+				</div>
+
+				<div class="input-field col m6 s12">
+					<input placeholder="" name="name" id="name" type="text" class="validate">
+					<label for="name">Name</label>
+				</div>
+
+				<div class="input-field col m6 s12">
+					<select name="color" id="color">
+						<option value="yellow">yellow</option>
+						<option value="red">red</option>
+						<option value="blue">blue</option>
+					</select>
+					<label>Color</label>
+				</div>
+				
+				<div class="input-field col m6 s12">
+					<select name="type" id="type">
+						<option value="waiting">Waiting</option>
+						<option value="completed">Completed</option>
+					</select>
+					<label>Type</label>
+				</div>
+
+				
+				<div class="input-field col m6 s12">
+					<input  placeholder="" name="icon" id="icon" type="text" >
+					<label>Icon</label>
+				</div>	
+
+
+
+				<div class="input-field col m12 s12" style="text-align: right">
+					<button onclick="updateMasterConfirm()"   class="btn-large waves-effect waves-light green darken-4" type="button" name="action"> Update 
+						<i class="material-icons right">send</i>
+					</button>
+				</div>	
+
+
+			</div>
+		</div>
+
+	</form>
+</div>
+
+
+
+<div id="modalDeleteMaster" class="modal ">
+	<form id="formDeleteMaster"  method="POST"  accept-charset="UTF-8">
+		<input name="_method" type="hidden" value="DELETE">
+		<div class="modal-content">
+			
+			<div class="row">
+				<div id="inputs"></div>
+				<h3> Desea eliminar el elemento ?</h3>
+
+				<div class="input-field col m12 s12" style="text-align: right">
+					<button onclick="deleteMasterConfirm()"   class="btn-large waves-effect waves-light green darken-4" type="button" name="action"> Confirmar  
+						<i class="material-icons right">send</i>
+					</button>
+				</div>	
+
+			</div>
+
+
+
+		</div>
+
+	</form>
+</div>
+
+
+
+{% endblock %}
+
+
+
+{% block notification %}
+{% include 'template/notification.html' %}
+{% endblock %}
+
+
+{% block chat_sidebar %} 
+{% include 'template/chat_sidebar.html' %}
+{% endblock %}
+
+
+{% block menu_lateral %} 
+{% include 'template/menu_lateral.html' %}
+{% endblock %}
+
+
+{% block javascript %} 
+<script>
+
+
+	us = jQuery.parseJSON(sessionStorage.getItem("user"));
+	$('#name__').text(us.firstname+' '+us.lastname);
+	$('#email__').text(us.email);
+	$('#avatar__').attr("src",us.avatar);
+
+
+	sessionStorage.setItem("urlAjax","http://localhost/API/masters.php/1");
+
+
+
+	create_menu();
+	create_notification();
+	create_datatableMaster();
+
+
+
+	function filter_datatable(){
+		sessionStorage.setItem("urlAjax","http://localhost/API/masters.php/1/color");
+		create_datatableMaster();
+	}
+
+
+	function create_menu(){
+
+		$.ajax({
+			method: "GET",
+			url: "http://localhost/API/menu_lateral.php/1",
+			dataType: "json"
+		})
+		.done(function(result) {
+			var menu= "";
+			$.each(result, function(i, n) {
+				menu = menu+"<li class=\"no-padding\"><a class=\"waves-effect waves-grey\" href=\""+n.href+"\">"+n.name+"</a></li>";
+			});
+			$('#menu').append(menu);
+		});
+
+	}
+
+
+	function create_notification(){
+
+
+		$("#notification__ .noti").remove();
+
+
+		$.ajax({
+			method: "GET",
+			url: "http://localhost/API/notifications.php/1",
+			dataType: "json"
+		})
+		.done(function(result) {
+			var menu= "";
+			$.each(result, function(i, n) {
+				menu = menu+" <li class='noti'><a href=\""+n.href+"\"><div class=\"notification\"><div class=\"notification-icon circle "+n.color+"\"> <i class=\"material-icons\">"+n.icon+"</i></div><div class=\"notification-text\"><p><b>"+n.emisor+"</b><br> "+n.name+"</p><span>"+n.created_at+"</span></div></div></a></li>";
+			});
+
+			$('#notification__').append(menu);
+
+		});
+
+	}
+
+
+
+
+
+
+	function create_datatableMaster(){
+
+		$('#tableMaster table').remove();
+		$('#tableMaster #datatableMaster___filter').remove();
+		$('#tableMaster #datatableMaster___info').remove();
+
+		$("#tableMaster").append("<table id=\"datatableMaster__\" class=\"display responsive-table datatable-example\"><thead><tr><th>Name</th><th>Type</th><th>SubType</th><th>Color</th><th>Icon</th><th></th></tr></thead><tbody class=\"tbodydata\" ></tbody></table>");
+
+
+		$.ajax({
+			method: "GET",
+			url: sessionStorage.getItem("urlAjax"),
+			dataType: "json"
+		})
+		.done(function(result) {
+
+			$('#datatableMaster__ td').remove();
+
+			var row= "";
+			$.each(result, function(i, n) {
+				row = row+"<tr><td> "+n.name+"</td><td> "+n.type+"</td><td> "+n.subtype+"</td><td>"+n.color+"</td><td> "+n.icon+"</td><td style='width:100px'><a onclick=\"updateMaster("+n.id+")\" class=\"btn-floating btn-small waves-effect waves-light blue\"><i class=\"material-icons\">add</i></a>&nbsp;&nbsp;<a onclick=\"deleteMaster("+n.id+")\" class=\"btn-floating btn-small waves-effect waves-light red\"><i class=\"material-icons\">add</i></a>&nbsp;&nbsp;</td></tr>";
+			});
+
+			$('#datatableMaster__ tbody').append(row);
+
+			datatableMaster_load();
+		});
+	}
+
+
+	function  datatableMaster_load(){
+
+
+		datatablex = $('#datatableMaster__').DataTable({
+			paging: false,
+			language: {
+				searchPlaceholder: 'Search records',
+				sSearch: '',
+				sLengthMenu: 'Show _MENU_',
+				sLength: 'dataTables_length',
+				oPaginate: {
+					sFirst: '<i class="material-icons">chevron_left</i>',
+					sPrevious: '<i class="material-icons">chevron_left</i>',
+					sNext: '<i class="material-icons">chevron_right</i>',
+					sLast: '<i class="material-icons">chevron_right</i>' 
+				}
+			}
+		});
+
+		$('.dataTables_length select').addClass('browser-default');
+	}
+
+
+	function deleteMaster(id){
+		$.ajax({
+			method: "GET",
+			url: "http://localhost/API/masters.php/1/"+id,
+			dataType: "json"
+		})
+		.done(function(result) {
+			var row= "";
+			$.each(result, function(i, n) {
+             	$('#formDeleteMaster #inputs input').remove();
+				$("#formDeleteMaster #inputs").append("<input name='id'  value='"+n.id+"'   type='hidden' >");
+				$('#modalDeleteMaster').modal('open');
+
+			});
+		});
+	}
+
+	function deleteMasterConfirm(){
+
+
+		$.ajax({
+			method: "DELETE",
+			url: "http://localhost/API/masters.php/1/"+$("#formDeleteMaster #id").val(),
+			data: $("#formDeleteMaster").serialize()
+
+		})
+		.done(function(msg) {
+
+			$('#modalDeleteMaster').modal('close');
+			Materialize.toast(' Eliminación Completada', 4000);
+			create_datatableMaster();
+
+		});
+	}
+
+
+	function updateMaster(id){
+		$.ajax({
+			method: "GET",
+			url: "http://localhost/API/masters.php/1/"+id,
+			dataType: "json"
+		})
+		.done(function(result) {
+			var row= "";
+
+			$.each(result, function(i, n) {
+
+				$("#formUpdateMaster #name").val(n.name);
+				$("#formUpdateMaster #color").val(n.color);
+				$("#formUpdateMaster #icon").val(n.icon);
+				$("#formUpdateMaster #longname").val(n.longname);
+				$("#formUpdateMaster #inputs").append("<input name='id'  value='"+n.id+"'   type='hidden' >");
+				$('#modalUpdateMaster').modal('open');
+
+			});
+		});
+	}
+
+	function updateMasterConfirm(){
+
+		$.ajax({
+			method: "PUT",
+			url: "http://localhost/API/masters.php/1/"+$("#formUpdateMaster #id").val(),
+			data: $("#formUpdateMaster").serialize()
+		})
+		.done(function(msg) {
+			$('#modalUpdateMaster').modal('close');
+			Materialize.toast('Edition completed!', 4000);
+			create_datatableMaster();
+		});
+	}
+
+	function newMaster(id){
+
+
+		$('#modalCreateMaster').modal('open');
+
+	}
+
+	function newMasterConfirm(){
+
+
+		$.ajax({
+			method: "POST",
+			url: "http://localhost/API/masters.php/1/",
+			data: $("#formCreateMaster").serialize()
+		})
+		.done(function(msg) {
+			$('#modalCreateMaster').modal('close');
+			Materialize.toast('Nuevo Registro', 4000);
+			create_datatableMaster();
+		});
+
+	}
+
+
+
+</script>
+{% endblock %}

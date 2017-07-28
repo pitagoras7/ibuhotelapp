@@ -1,0 +1,47 @@
+#tableGuest{
+    background: #fff;
+    margin-top: 8px;
+    border-radius: 5px;
+    border: none;
+}/* Write your custom CSS here */
+
+#principal .collection{
+
+ background: #fff;
+    border-radius: 5px;
+    border: none;
+
+}
+
+
+span.badge.aviso {
+    font-weight: 500;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #26a69a;
+    border-radius: 2px;
+    padding: 0 10px;
+    height: 25px;
+    padding-top: 2px;
+}
+
+.card .card-image .card-title  , .card.white-text .card-title {
+    color: #333;
+    font-weight: 600;
+    background: #fff;
+    padding: 5px;
+    height: 40px;
+    padding-left: 10px;
+    font-size: 16px;
+    width: 100%;
+}
+
+.card .card-title i {
+    font-size: 22px;
+    line-height: 24px;
+    vertical-align: top;
+    margin-right: 10px;
+    position: absolute;
+    top: 3px;
+    left: -10px;
+}
