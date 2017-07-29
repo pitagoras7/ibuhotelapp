@@ -205,7 +205,7 @@
 	$('#avatar__').attr("src",us.avatar);
 
 
-	sessionStorage.setItem("urlAjax","http://localhost/API/masters.php/1");
+	sessionStorage.setItem("urlAjax","http://qreatech.com/ws/API/masters.php/1");
 
 
 
@@ -216,7 +216,7 @@
 
 
 	function filter_datatable(){
-		sessionStorage.setItem("urlAjax","http://localhost/API/masters.php/1/color");
+		sessionStorage.setItem("urlAjax","http://qreatech.com/ws/API/masters.php/1/color");
 		create_datatableMaster();
 	}
 
@@ -225,7 +225,7 @@
 
 		$.ajax({
 			method: "GET",
-			url: "http://localhost/API/menu_lateral.php/1",
+			url: "http://qreatech.com/ws/API/menu_lateral.php/1",
 			dataType: "json"
 		})
 		.done(function(result) {
@@ -247,7 +247,7 @@
 
 		$.ajax({
 			method: "GET",
-			url: "http://localhost/API/notifications.php/1",
+			url: "http://qreatech.com/ws/API/notifications.php/1",
 			dataType: "json"
 		})
 		.done(function(result) {
@@ -323,7 +323,7 @@
 	function deleteMaster(id){
 		$.ajax({
 			method: "GET",
-			url: "http://localhost/API/masters.php/1/"+id,
+			url: "http://qreatech.com/ws/API/masters.php/1/"+id,
 			dataType: "json"
 		})
 		.done(function(result) {
@@ -342,7 +342,7 @@
 
 		$.ajax({
 			method: "DELETE",
-			url: "http://localhost/API/masters.php/1/"+$("#formDeleteMaster #id").val(),
+			url: "http://qreatech.com/ws/API/masters.php/1/"+$("#formDeleteMaster #id").val(),
 			data: $("#formDeleteMaster").serialize()
 
 		})
@@ -359,7 +359,7 @@
 	function updateMaster(id){
 		$.ajax({
 			method: "GET",
-			url: "http://localhost/API/masters.php/1/"+id,
+			url: "http://qreatech.com/ws/API/masters.php/1/"+id,
 			dataType: "json"
 		})
 		.done(function(result) {
@@ -382,7 +382,7 @@
 
 		$.ajax({
 			method: "PUT",
-			url: "http://localhost/API/masters.php/1/"+$("#formUpdateMaster #id").val(),
+			url: "http://qreatech.com/ws/API/masters.php/1/"+$("#formUpdateMaster #id").val(),
 			data: $("#formUpdateMaster").serialize()
 		})
 		.done(function(msg) {
@@ -404,7 +404,7 @@
 
 		$.ajax({
 			method: "POST",
-			url: "http://localhost/API/masters.php/1/",
+			url: "http://qreatech.com/ws/API/masters.php/1/",
 			data: $("#formCreateMaster").serialize()
 		})
 		.done(function(msg) {
