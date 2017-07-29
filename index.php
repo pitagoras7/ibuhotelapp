@@ -1,4 +1,5 @@
 <?php
+set_init('display_errors',0);
 require_once 'twig/lib/Twig/Autoloader.php';
 Twig_Autoloader::register();
 $loader = new Twig_Loader_Filesystem('../ibuhotelapp/');
