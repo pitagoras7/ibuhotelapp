@@ -385,7 +385,7 @@
 	$('#avatar__').attr("src",us.avatar);
 
 
-	sessionStorage.setItem("urlAjax","http://localhost/API/masters.php/1");
+	sessionStorage.setItem("urlAjax","http://qreatech.com/ws/API/masters.php/1");
 
 
 
@@ -406,7 +406,7 @@
 
 		$.ajax({
 			method: "GET",
-			url: "http://localhost/API/menu_lateral.php/1",
+			url: "http://qreatech.com/ws/API/menu_lateral.php/1",
 			dataType: "json"
 		})
 		.done(function(result) {
@@ -428,7 +428,7 @@
 
 		$.ajax({
 			method: "GET",
-			url: "http://localhost/API/notifications.php/1",
+			url: "http://qreatech.com/ws/API/notifications.php/1",
 			dataType: "json"
 		})
 		.done(function(result) {
@@ -459,7 +459,7 @@
 
 		$.ajax({
 			method: "GET",
-			url: "http://localhost/API/Guest.php/1/ocupacion",
+			url: "http://qreatech.com/ws/API/Guest.php/1/ocupacion",
 			dataType: "json"
 		})
 		.done(function(result) {
@@ -507,7 +507,7 @@
 	function deleteMaster(id){
 		$.ajax({
 			method: "GET",
-			url: "http://localhost/API/masters.php/1/"+id,
+			url: "http://qreatech.com/ws/API/masters.php/1/"+id,
 			dataType: "json"
 		})
 		.done(function(result) {
@@ -526,7 +526,7 @@
 
 		$.ajax({
 			method: "DELETE",
-			url: "http://localhost/API/masters.php/1/"+$("#formDeleteMaster #id").val(),
+			url: "http://qreatech.com/ws/API/masters.php/1/"+$("#formDeleteMaster #id").val(),
 			data: $("#formDeleteMaster").serialize()
 
 		})
@@ -548,7 +548,7 @@
 
 		$.ajax({
 			method: "GET",
-			url: "http://localhost/API/Locations.php/1/disponibilidad/"+desde+"/"+hasta,
+			url: "http://qreatech.com/ws/API/Locations.php/1/disponibilidad/"+desde+"/"+hasta,
 			dataType: "json"
 		})
 		.done(function(result) {
@@ -570,7 +570,7 @@
 
 		$.ajax({
 			method: "GET",
-			url: "http://localhost/API/Locations.php/1/consultaDisponibilidad/"+id,
+			url: "http://qreatech.com/ws/API/Locations.php/1/consultaDisponibilidad/"+id,
 			dataType: "json"
 		})
 		.done(function(result) {
@@ -601,7 +601,7 @@
 	function updateMaster(id){
 		$.ajax({
 			method: "GET",
-			url: "http://localhost/API/masters.php/1/"+id,
+			url: "http://qreatech.com/ws/API/masters.php/1/"+id,
 			dataType: "json"
 		})
 		.done(function(result) {
@@ -624,7 +624,7 @@
 
 		$.ajax({
 			method: "PUT",
-			url: "http://localhost/API/masters.php/1/"+$("#formUpdateMaster #id").val(),
+			url: "http://qreatech.com/ws/API/masters.php/1/"+$("#formUpdateMaster #id").val(),
 			data: $("#formUpdateMaster").serialize()
 		})
 		.done(function(msg) {
@@ -646,7 +646,7 @@
 
 		$.ajax({
 			method: "POST",
-			url: "http://localhost/API/masters.php/1/",
+			url: "http://qreatech.com/ws/API/masters.php/1/",
 			data: $("#formCreateMaster").serialize()
 		})
 		.done(function(msg) {
@@ -670,7 +670,7 @@
 
 		$.ajax({
 			method: "POST",
-			url: "http://localhost/API/masters.php/1/",
+			url: "http://qreatech.com/ws/API/masters.php/1/",
 			data: $("#formCreateMaster").serialize()
 		})
 		.done(function(msg) {
@@ -756,7 +756,7 @@ function newRoomservice(){
 
 	$.ajax({
 		method: "GET",
-		url: "http://localhost/API/service.php/1/roomservice",
+		url: "http://qreatech.com/ws/API/service.php/1/roomservice",
 		dataType: "json"
 	})
 	.done(function(result) {

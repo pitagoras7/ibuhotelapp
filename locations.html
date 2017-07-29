@@ -228,7 +228,7 @@
 
 		$.ajax({
 			method: "GET",
-			url: "http://localhost/API/menu_lateral.php/1",
+			url: "http://qreatech.com/ws/API/menu_lateral.php/1",
 			dataType: "json"
 		})
 		.done(function(result) {
@@ -250,7 +250,7 @@
 
 		$.ajax({
 			method: "GET",
-			url: "http://localhost/API/notifications.php/1",
+			url: "http://qreatech.com/ws/API/notifications.php/1",
 			dataType: "json"
 		})
 		.done(function(result) {
@@ -281,14 +281,14 @@
 	/* Special code */
 
 
-	sessionStorage.setItem("urlAjax","http://localhost/API/Locations.php/1");
+	sessionStorage.setItem("urlAjax","http://qreatech.com/ws/API/Locations.php/1");
 
 
 	create_datatableLocation();
 
 
 	function filter_datatable(){
-		sessionStorage.setItem("urlAjax","http://localhost/API/Locations.php/1/color");
+		sessionStorage.setItem("urlAjax","http://qreatech.com/ws/API/Locations.php/1/color");
 		create_datatableLocation();
 	}
 
@@ -387,7 +387,7 @@
 	function deleteLocation(id){
 		$.ajax({
 			method: "GET",
-			url: "http://localhost/API/Locations.php/1/"+id,
+			url: "http://qreatech.com/ws/API/Locations.php/1/"+id,
 			dataType: "json"
 		})
 		.done(function(result) {
@@ -406,7 +406,7 @@
 
 		$.ajax({
 			method: "DELETE",
-			url: "http://localhost/API/Locations.php/1/"+$("#formDeleteLocation #id").val(),
+			url: "http://qreatech.com/ws/API/Locations.php/1/"+$("#formDeleteLocation #id").val(),
 			data: $("#formDeleteLocation").serialize()
 
 		})
@@ -423,7 +423,7 @@
 	function updateLocation(id){
 		$.ajax({
 			method: "GET",
-			url: "http://localhost/API/Locations.php/1/"+id,
+			url: "http://qreatech.com/ws/API/Locations.php/1/"+id,
 			dataType: "json"
 		})
 		.done(function(result) {
@@ -455,7 +455,7 @@
 
 		$.ajax({
 			method: "PUT",
-			url: "http://localhost/API/Locations.php/1/"+$("#formUpdateLocation #id").val(),
+			url: "http://qreatech.com/ws/API/Locations.php/1/"+$("#formUpdateLocation #id").val(),
 			data: $("#formUpdateLocation").serialize()
 		})
 		.done(function(msg) {
@@ -478,7 +478,7 @@
 
 		$.ajax({
 			method: "POST",
-			url: "http://localhost/API/Locations.php/1/",
+			url: "http://qreatech.com/ws/API/Locations.php/1/",
 			data: $("#formCreateLocation").serialize()
 		})
 		.done(function(msg) {
@@ -495,7 +495,7 @@
 
 		$.ajax({
 			method: "GET",
-			url: "http://localhost/API/masters.php/1/location",
+			url: "http://qreatech.com/ws/API/masters.php/1/location",
 			dataType: "json"
 		})
 		.done(function(result) {
@@ -538,7 +538,7 @@
 
 		$.ajax({
 			method: "GET",
-			url: "http://localhost/API/masters.php/1/locationSubtype/"+$("#formCreateLocation #location_type option:selected").text(),
+			url: "http://qreatech.com/ws/API/masters.php/1/locationSubtype/"+$("#formCreateLocation #location_type option:selected").text(),
 			dataType: "json"
 		})
 		.done(function(result) {
