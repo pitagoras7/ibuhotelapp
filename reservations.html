@@ -87,12 +87,26 @@
 	</div>
 </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div id="nav_service" style="display: none">
 
 	<div class="row">
 
 		<div class="input-field col m2 s12">
-			<a onclick="findDisponibilidad()" class=" btn btn-large waves-effect waves-light green">
+			<a onclick="newOrderConfirm()" class=" btn btn-large waves-effect waves-light green">
 				Solicitar Orden
 			</a>
 		</div>
@@ -108,17 +122,56 @@
 		</div>
 	</div>
 
+</div>
 
+
+<div id="nav_extra" style="display: none">
+
+	<div class="row">
+
+		<div class="input-field col m2 s12">
+			<a onclick="modo('service')" class=" btn btn-large waves-effect waves-light orange">
+				Volver Atrás
+			</a>
+		</div>
+	</div>
 
 </div>
 
 <div id="dashboard_service">
 
-	<div  id="panel" class="col m10 s12">
+
+
+	<div  class="col m9 s12">
+
+		<div  id="panel">
+		</div>
+
+		<div  id="extra">
+		</div>
+
 
 	</div>
+	
 
-	<div id="recibo" class="col m2 s12">
+
+
+	<div id="recibo" class="col m3 s12">
+		<div id="acciones">
+
+			<input type='button'  onclick="quantyService(2)" id='quiantyservice' class=' btn btn-small orange' style='width:50px' >
+
+			<input type='button' onclick="quantyService(1)" class=' btn btn-small green'  style='width:50px' value='+'>
+
+			<input type='button' onclick="quantyService(0)" class=' btn btn-small red'  style='width:50px' value='-'>
+
+			<input type='button' onclick="quantyService(3)" class=' btn btn-small blue'  style='width:50px' value='-'>
+
+		</div>
+		<div id="lcd"></div>
+
+
+
 
 	</div>
 
@@ -134,10 +187,10 @@
 				<div class="col m12">
 
 					<div class="carousel carousel-slider" style="height:200px !important">
-						<a class="carousel-item" href="#one!"><img   style="height:300px !important"   src="https://lorempixel.com/800/400/food/1"></a>
+					<!--	<a class="carousel-item" href="#one!"><img   style="height:300px !important"   src="https://lorempixel.com/800/400/food/1"></a>
 						<a class="carousel-item" href="#two!"><img   style="height:300px !important" src="https://lorempixel.com/800/400/food/2"></a>
 						<a class="carousel-item" href="#three!"><img  style="height:300px !important"  src="https://lorempixel.com/800/400/food/3"></a>
-						<a class="carousel-item" href="#four!"><img   style="height:300px !important" src="https://lorempixel.com/800/400/food/4"></a>
+						<a class="carousel-item" href="#four!"><img   style="height:300px !important" src="https://lorempixel.com/800/400/food/4"></a>-->
 					</div>
 					
 
@@ -165,6 +218,7 @@
 
 	</form>
 </div>
+
 
 <div id="modalCreateGuest" class="modal ">
 	<form id="formCreateGuest"  method="POST"  accept-charset="UTF-8">
@@ -364,430 +418,5 @@
 
 
 {% block javascript %} 
-<script>
-
-
-	$(document).ready(function(){
-
-		$('.carousel.carousel-slider').carousel({fullWidth: true});
-
-
-
-
-
-
-	});
-
-
-	us = jQuery.parseJSON(sessionStorage.getItem("user"));
-	$('#name__').text(us.firstname+' '+us.lastname);
-	$('#email__').text(us.email);
-	$('#avatar__').attr("src",us.avatar);
-
-
-	sessionStorage.setItem("urlAjax","http://localhost/API/masters.php/1");
-
-
-
-	create_menu();
-	create_notification();
-	create_datatableGuest();
-
-	var service 				= new Array();
-	service.detalle 			= new Array();
-
-
-	function filter_datatable(){
-		create_datatableGuest();
-	}
-
-
-	function create_menu(){
-
-		$.ajax({
-			method: "GET",
-			url: "http://localhost/API/menu_lateral.php/1",
-			dataType: "json"
-		})
-		.done(function(result) {
-			var menu= "";
-			$.each(result, function(i, n) {
-				menu = menu+"<li class=\"no-padding\"><a class=\"waves-effect waves-grey\" href=\""+n.href+"\">"+n.name+"</a></li>";
-			});
-			$('#menu').append(menu);
-		});
-
-	}
-
-
-	function create_notification(){
-
-
-		$("#notification__ .noti").remove();
-
-
-		$.ajax({
-			method: "GET",
-			url: "http://localhost/API/notifications.php/1",
-			dataType: "json"
-		})
-		.done(function(result) {
-			var menu= "";
-			$.each(result, function(i, n) {
-				menu = menu+" <li class='noti'><a href=\""+n.href+"\"><div class=\"notification\"><div class=\"notification-icon circle "+n.color+"\"> <i class=\"material-icons\">"+n.icon+"</i></div><div class=\"notification-text\"><p><b>"+n.emisor+"</b><br> "+n.name+"</p><span>"+n.created_at+"</span></div></div></a></li>";
-			});
-
-			$('#notification__').append(menu);
-
-		});
-
-	}
-
-
-
-
-
-
-	function create_datatableGuest(){
-
-		$('#tableGuest table').remove();
-		$('#tableGuest #datatableGuest___filter').remove();
-		$('#tableGuest #datatableGuest___info').remove();
-
-		$("#tableGuest").append("<table id=\"datatableGuest__\" class=\"display responsive-table datatable-example\"><thead><tr><th>Nombre</th><th>Telefono</th><th>Idioma</th><th></th></tr></thead><tbody class=\"tbodydata\" ></tbody></table>");
-
-
-		$.ajax({
-			method: "GET",
-			url: "http://localhost/API/Guest.php/1/ocupacion",
-			dataType: "json"
-		})
-		.done(function(result) {
-
-			$('#datatableGuest__ td').remove();
-
-			var row= "";
-			$.each(result, function(i, n) {
-				row = row+"<tr><td> "+n.firstname+"</td><td> "+n.telephone+"</td><td>"+n.level+"</td><td style='width:100px'><a onclick=\"updateGuest("+n.id+")\" class=\"btn btn-small waves-effect waves-light blue\"><i class=\"material-icons\">edit</i></a></td></tr>";
-			});
-
-			$('#datatableGuest__ tbody').append(row);
-
-
-			datatableGuest_load();
-			$('#tableGuest #datatableGuest___filter').remove();
-			$('#tableGuest #datatableGuest___info').remove();
-		});
-	}
-
-
-	function  datatableGuest_load(){
-
-
-		datatablex = $('#datatableGuest__').DataTable({
-			paging: false,
-			language: {
-				searchPlaceholder: 'Search records',
-				sSearch: '',
-				sLengthMenu: 'Show _MENU_',
-				sLength: 'dataTables_length',
-				oPaginate: {
-					sFirst: '<i class="material-icons">chevron_left</i>',
-					sPrevious: '<i class="material-icons">chevron_left</i>',
-					sNext: '<i class="material-icons">chevron_right</i>',
-					sLast: '<i class="material-icons">chevron_right</i>' 
-				}
-			}
-		});
-
-		$('.dataTables_length select').addClass('browser-default');
-	}
-
-
-	function deleteMaster(id){
-		$.ajax({
-			method: "GET",
-			url: "http://localhost/API/masters.php/1/"+id,
-			dataType: "json"
-		})
-		.done(function(result) {
-			var row= "";
-			$.each(result, function(i, n) {
-				$('#formDeleteMaster #inputs input').remove();
-				$("#formDeleteMaster #inputs").append("<input name='id'  value='"+n.id+"'   type='hidden' >");
-				$('#modalDeleteMaster').modal('open');
-
-			});
-		});
-	}
-
-	function deleteMasterConfirm(){
-
-
-		$.ajax({
-			method: "DELETE",
-			url: "http://localhost/API/masters.php/1/"+$("#formDeleteMaster #id").val(),
-			data: $("#formDeleteMaster").serialize()
-
-		})
-		.done(function(msg) {
-
-			$('#modalDeleteMaster').modal('close');
-			Materialize.toast(' Eliminación Completada', 4000);
-			create_datatableMaster();
-
-		});
-	}
-
-
-
-	function findDisponibilidad(){
-
-		desde = $("#desde").val();
-		hasta = $("#hasta").val();
-
-		$.ajax({
-			method: "GET",
-			url: "http://localhost/API/Locations.php/1/disponibilidad/"+desde+"/"+hasta,
-			dataType: "json"
-		})
-		.done(function(result) {
-
-			$("#tableDisponibilidad div").remove();
-			$.each(result, function(i, n) {
-
-				$("#tableDisponibilidad").append("<div  class='col m2 s6'><div onclick='newDisponiblidad("+n.id+")' style='width:100%; height:50px; line-height:1.4em; padding:10px' class=' btn btn-small waves-effect waves-light "+n.location_subtype_fk.color+" ' >"+n.name+" <br> "+n.location_subtype_fk.name+" </div></div>");
-
-			});
-
-		});
-
-	}
-
-
-	function newDisponiblidad(id){
-
-
-		$.ajax({
-			method: "GET",
-			url: "http://localhost/API/Locations.php/1/consultaDisponibilidad/"+id,
-			dataType: "json"
-		})
-		.done(function(result) {
-
-			$.each(result, function(i, n) {
-
-				$('#modalCreateDisponibilidad #habitacion_name ').text(n.name);
-				$('#modalCreateDisponibilidad #habitacion_icon ').text(n.icon);
-				$('#modalCreateDisponibilidad #habitacion_type ').text(n.location_type_fk.name);
-				$('#modalCreateDisponibilidad #habitacion_subtype ').text(n.location_subtype_fk.name);
-
-				$('#modalCreateDisponibilidad #habitacion_avatar ').attr("src", n.location_subtype_fk.avatar );
-
-			});
-
-			$('#modalCreateDisponibilidad').modal('open');
-
-
-
-
-
-		});
-
-
-	}
-
-
-	function updateMaster(id){
-		$.ajax({
-			method: "GET",
-			url: "http://localhost/API/masters.php/1/"+id,
-			dataType: "json"
-		})
-		.done(function(result) {
-			var row= "";
-
-			$.each(result, function(i, n) {
-
-				$("#formUpdateMaster #name").val(n.name);
-				$("#formUpdateMaster #color").val(n.color);
-				$("#formUpdateMaster #icon").val(n.icon);
-				$("#formUpdateMaster #longname").val(n.longname);
-				$("#formUpdateMaster #inputs").append("<input name='id'  value='"+n.id+"'   type='hidden' >");
-				$('#modalUpdateMaster').modal('open');
-
-			});
-		});
-	}
-
-	function updateMasterConfirm(){
-
-		$.ajax({
-			method: "PUT",
-			url: "http://localhost/API/masters.php/1/"+$("#formUpdateMaster #id").val(),
-			data: $("#formUpdateMaster").serialize()
-		})
-		.done(function(msg) {
-			$('#modalUpdateMaster').modal('close');
-			Materialize.toast('Edition completed!', 4000);
-			create_datatableMaster();
-		});
-	}
-
-	function newMaster(id){
-
-
-		$('#modalCreateMaster').modal('open');
-
-	}
-
-	function newMasterConfirm(){
-
-
-		$.ajax({
-			method: "POST",
-			url: "http://localhost/API/masters.php/1/",
-			data: $("#formCreateMaster").serialize()
-		})
-		.done(function(msg) {
-			$('#modalCreateMaster').modal('close');
-			Materialize.toast('Nuevo Registro', 4000);
-			create_datatableMaster();
-		});
-
-	}
-
-
-	function newGuest(){
-
-
-		$('#modalCreateGuest').modal('open');
-
-	}
-
-	function newGuestConfirm(){
-
-
-		$.ajax({
-			method: "POST",
-			url: "http://localhost/API/masters.php/1/",
-			data: $("#formCreateMaster").serialize()
-		})
-		.done(function(msg) {
-			$('#modalCreateMaster').modal('close');
-			Materialize.toast('Nuevo Registro', 4000);
-			create_datatableMaster();
-		});
-
-	}
-
-	function quantyService(va,cant,i,name,id,price){
-
-		if(cant==0){
-
-			$("#quianty"+i+"service").val( parseInt($("#quianty"+i+"service").val())- 1 );
-
-		}else{
-
-			$("#quianty"+i+"service").val( parseInt($("#quianty"+i+"service").val()) + 1 );
-		}
-		
-
-
-		add_service(id,name,$("#quianty"+i+"service").val(),price);
-
-
-	}
-
-
-	function add_service(a,b,c,d){
-
-		var x=0;
-
-		for (var i = 0; i < window.service.detalle.length; i++) {
-
-			if(window.service.detalle[i].codigo==a){
-				window.service.detalle[i].cantidad=c;
-				x=1;
-			}
-
-		}
-
-		if(x==0){
-
-			var serv 		= new Array();
-			serv.codigo 	= a;
-			serv.nombre 	= b;
-			serv.estatu  	= true;
-			serv.cantidad 	= c;
-			serv.supplies 	= new Array();
-			serv.costo  = d;
-
-
-			window.service.detalle.push(serv);
-
-
-		}
-
-
-	//tokenTransaccion = Math.floor( Math.random() * 9000000000 ) + 10000000;
-
-	//console.log(producto);
-
-	var  html_recibo="";
-
-	$("#dashboard_service #recibo p").remove();
-
-	for (var i = 0; i < window.service.detalle.length; i++) {
-
-		html_recibo+= "<p>"+window.service.detalle[i].nombre+" "+window.service.detalle[i].cantidad+"</p>";
-
-	}
-
-
-	$("#dashboard_service #recibo ").append(html_recibo);
-
-
-
-}
-
-
-function newRoomservice(){
-
-	$.ajax({
-		method: "GET",
-		url: "http://localhost/API/service.php/1/roomservice",
-		dataType: "json"
-	})
-	.done(function(result) {
-		$("#dashboard_general").css('display','none');
-		$("#nav_service").css('display','block');
-
-		$("#dashboard_service #panel div").remove();
-
-		sessionStorage.setItem("service", JSON.stringify(result));
-
-
-	    var serviceLocal = jQuery.parseJSON(sessionStorage.getItem("service"));
-
-	    console.log(serviceLocal[1].name);
-
-
-		$.each(result, function(i, n) {
-
-
-
-			$("#dashboard_service #panel ").append("<div class='input-field col m2 s12'><div class='card' style='overflow: hidden; height:150px'><div class='card-image waves-effect waves-block waves-light'><img class='activator' src='"+n.avatar1+"' alt='></div><div class='card-content'><span class='card-title activator'>"+n.name+"</span></div><div class='card-reveal' style='display: none; transform: translateY(0px);'><span class='card-title'>"+n.name+"<i class='material-icons right'>close</i></span><p><input type='button' id='quianty"+i+"service' class=' btn-floating btn-small green'style='width:25%' value='2'><input type='button' onclick=\"quantyService(this,'1','"+i+"','"+n.name+"','"+n.id+"','"+n.price+"')\" class=' btn-floating btn-small green'style='width:25%' value='+'><input type='button' onclick=\"quantyService(this,0,'"+i+"','"+n.name+"','"+n.id+"','"+n.price+"')\" class=' btn-floating btn-small red'style='width:25%' value='-'></p></div></div></div>");
-
-		});
-
-	});
-
-
-		//$('#modalCreateRoomservice').modal('open');
-
-	}
-
-
-</script>
+<script type="text/javascript" src="js/reservations.js"></script>
 {% endblock %}
